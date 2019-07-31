@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance, :in_journey
+  attr_reader :balance, :entry_station
 
   MAXIMUM_BALANCE = 90
   AMOUNT = 1
@@ -9,6 +9,7 @@ class Oystercard
   def initialize
     @balance = 0
     @in_journey = false
+    @entry_station = nil
   end
 
   def top_up(amount)
@@ -18,9 +19,9 @@ class Oystercard
     @balance += amount
   end
   
-  def touch_in
+  def touch_in(station)
     if @balance >= AMOUNT
-    @in_journey = true
+      @entry_station = station
     else
       raise "Not enough money" 
     end
@@ -28,15 +29,16 @@ class Oystercard
   end
 
   def touch_out
-    @in_journey = false
+    @entry_station = nil
     @balance -= 1
 
 
   end
 
   def in_journey?
-    @in_journey
+   (@entry_station != nil)? true : false
   end
+
    private
   def deduct(amount)
     @balance -= amount
