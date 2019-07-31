@@ -77,7 +77,15 @@ describe Oystercard do
     subject.touch_out
     expect(subject.entry_station).to eq(nil)
   end 
+  it "has station of the touch_in" do
+    random1_station = Station.new
+    subject.top_up(2)
+    subject.touch_in(random_station)
+    subject.touch_out(random1_station)
+    expect(subject.list_journeys).to include(entry_station:random_station,entry_station:random1_station)
+  end
 
 
+ 
 end
 

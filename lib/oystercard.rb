@@ -10,6 +10,7 @@ class Oystercard
     @balance = 0
     @in_journey = false
     @entry_station = nil
+    @list_journeys = []
   end
 
   def top_up(amount)
