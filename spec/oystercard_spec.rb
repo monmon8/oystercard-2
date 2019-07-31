@@ -55,5 +55,10 @@ describe Oystercard do
   it "has the minimun amount" do
     expect{subject.touch_in }.to raise_error
   end 
+  it "deduct the amount from the balance" do
+    subject.top_up(2)
+    subject.touch_in
+    expect{subject.touch_out}.to change{subject.balance}.by(-1)
+  end 
 
 end
