@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :list_journeys
 
   MAXIMUM_BALANCE = 90
   AMOUNT = 1
@@ -29,9 +29,11 @@ class Oystercard
     
   end
 
-  def touch_out
+  def touch_out(station)
+    @list_journeys << 
     @entry_station = nil
     @balance -= 1
+
 
 
   end
