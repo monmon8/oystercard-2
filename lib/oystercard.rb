@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 class Oystercard
-  attr_reader :balance, :currently_in_use
+  attr_reader :balance, :in_journey
 
   MAXIMUM_BALANCE = 90
 
   def initialize
     @balance = 0
-    @currently_in_use = false
+    @in_journey = false
   end
 
   def top_up(amount)
@@ -22,14 +22,14 @@ class Oystercard
   end
 
   def touch_in
-    @currently_in_use = true
+    @in_journey = true
   end
 
   def touch_out
-    @currently_in_use = false
+    @in_journey = false
   end
 
   def in_journey?
-    @currently_in_use
+    @in_journey
   end
 end
