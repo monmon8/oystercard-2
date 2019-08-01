@@ -4,8 +4,17 @@ require 'oystercard'
 require 'station'
 
 describe Oystercard do
-  #let(:random_station){Station.new}
-  let (:random_station){double()}
+  let(:random_station){Station.new}
+  let (:entry_station){double(random_station)}
+  let (:exit_station){double(random_station)}
+
+  it "stores exit station" do
+    subject.top_up(2)
+    subject.touch_in(entry_station)
+    subject.touch_out(exit_station)
+    expect(subject.exit_station).to eq(exit_station)
+    
+  end 
   it 'has a balance of 0' do
     oystercard = Oystercard.new
     expect(oystercard.balance).to eq 0
@@ -52,7 +61,7 @@ describe Oystercard do
   it 'can touch out' do
     subject.top_up(2)
     subject.touch_in(random_station)
-    subject.touch_out
+    subject.touch_out(random_station)
     expect(subject).not_to be_in_journey
   end
 
@@ -63,7 +72,7 @@ describe Oystercard do
   it "deduct the amount from the balance" do
     subject.top_up(2)
     subject.touch_in(random_station)
-    expect{subject.touch_out}.to change{subject.balance}.by(-1)
+    expect{subject.touch_out(exit_station)}.to change{subject.balance}.by(-1)
   end 
   
   it "remember the name of the station" do
@@ -74,7 +83,7 @@ describe Oystercard do
   it "forgets the entry station on touch out " do
     subject.top_up(2)
     subject.touch_in(random_station)
-    subject.touch_out
+    subject.touch_out(random_station)
     expect(subject.entry_station).to eq(nil)
   end 
   it "has station of the touch_in" do
@@ -82,9 +91,11 @@ describe Oystercard do
     subject.top_up(2)
     subject.touch_in(random_station)
     subject.touch_out(random1_station)
-    expect(subject.list_journeys).to include(entry_station:random_station,entry_station:random1_station)
+    expect(subject.list_journeys).to include(entry_station:random_station,exit_station:random1_station)
   end
-
+  it "has a card that has an empty list of journeys by default" do
+    expect(subject.list_journeys).to be_empty
+  end 
 
  
 end
