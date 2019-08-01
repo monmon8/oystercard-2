@@ -36,9 +36,10 @@ class Oystercard
   def touch_out(exit_station)
     @balance -= 1
     @exit_station = exit_station
-    @entry_station = nil
+    
     @journey[:exit_station] = exit_station
     @list_journeys << @journey
+    @entry_station = nil
  
 
 
